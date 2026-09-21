@@ -1,47 +1,18 @@
-```yaml
-name: QE Continuous Integration Pipeline
+const login = require("./auth");
 
-on:
-  pull_request:
-    branches: [ main ]
+test("Mat khau sai tra ve false", () => {
+    expect(login("admin", "456")).toBe(false);
+});
 
-  push:
-    branches: [ main ]
+test("Username rong tra ve false", () => {
+    expect(login("", "123")).toBe(false);
+});
 
-jobs:
-  smoke-test:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
+test("Mat khau chua ky tu dac biet tra ve false", () => {
+    expect(login("admin", "12@3")).toBe(false);
+});
 
-    steps:
-      - uses: actions/checkout@v4
+test("Tai khoan bi khoa tra ve false", () => {
+    expect(login("locked", "123")).toBe(false);
+});
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Run Quality Gate 1 - Smoke Test
-        run: npm run test:smoke
-
-  regression-test:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Run Quality Gate 2 - Automated Regression Test
-        run: npm run test:regression
-```
