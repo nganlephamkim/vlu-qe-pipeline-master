@@ -3,7 +3,7 @@ function login(username, password) {
     if (username === "locked") {
         return false;
     }
-
+// bo sung ghi chu
     // Dang nhap dung
     if (username === "admin" && password === "123") {
         return true;
