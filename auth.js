@@ -5,7 +5,7 @@ function login(username, password) {
     }
 // bo sung ghi chu
     // Dang nhap dung
-    if (username === "admin" && password === "9999") {
+    if (username === "admin" && password === "123") {
         return true;
     }
 
